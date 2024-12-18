@@ -4,4 +4,10 @@ export default ({ env }) => ({
   app: {
     keys: env.array('APP_KEYS'),
   },
+  settings: {
+    cors: {
+      origin: ['http://localhost:3000'], // Replace with your Next.js app's URL
+      credentials: true,
+    },
+  },
 });
