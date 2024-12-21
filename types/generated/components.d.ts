@@ -29,11 +29,12 @@ export interface ComponentsLink extends Struct.ComponentSchema {
 export interface LayoutFeaturesSection extends Struct.ComponentSchema {
   collectionName: 'components_layout_features_sections';
   info: {
+    description: '';
     displayName: 'Features Section';
   };
   attributes: {
     description: Schema.Attribute.Text;
-    feature: Schema.Attribute.Component<'components.feature', true>;
+    features: Schema.Attribute.Component<'components.feature', true>;
     title: Schema.Attribute.String;
   };
 }
