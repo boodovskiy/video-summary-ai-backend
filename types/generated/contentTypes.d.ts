@@ -889,20 +889,23 @@ export interface PluginUsersPermissionsUser
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
+    bio: Schema.Attribute.Text;
     blocked: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     confirmationToken: Schema.Attribute.String & Schema.Attribute.Private;
     confirmed: Schema.Attribute.Boolean & Schema.Attribute.DefaultTo<false>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
+    credits: Schema.Attribute.Integer & Schema.Attribute.DefaultTo<0>;
     email: Schema.Attribute.Email &
       Schema.Attribute.Required &
       Schema.Attribute.SetMinMaxLength<{
         minLength: 6;
       }>;
+    firstName: Schema.Attribute.String;
+    lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
       'oneToMany',
