@@ -77,6 +77,14 @@
     "credits": {
       "type": "integer",
       "default": 0
+    },
+    "image": {
+      "allowedTypes": [
+        "files",
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
