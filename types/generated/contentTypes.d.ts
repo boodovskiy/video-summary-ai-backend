@@ -905,6 +905,7 @@ export interface PluginUsersPermissionsUser
         minLength: 6;
       }>;
     firstName: Schema.Attribute.String;
+    image: Schema.Attribute.Media<'files' | 'images'>;
     lastName: Schema.Attribute.String;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<
