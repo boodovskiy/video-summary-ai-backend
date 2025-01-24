@@ -4,7 +4,8 @@
   "info": {
     "singularName": "summary",
     "pluralName": "summaries",
-    "displayName": "Summary"
+    "displayName": "Summary",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -25,6 +26,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "summaries"
+    },
+    "authorId": {
+      "type": "string"
     }
   }
 }

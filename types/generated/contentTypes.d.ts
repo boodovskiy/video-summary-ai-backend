@@ -437,6 +437,7 @@ export interface ApiHomePageHomePage extends Struct.SingleTypeSchema {
 export interface ApiSummarySummary extends Struct.CollectionTypeSchema {
   collectionName: 'summaries';
   info: {
+    description: '';
     displayName: 'Summary';
     pluralName: 'summaries';
     singularName: 'summary';
@@ -445,6 +446,7 @@ export interface ApiSummarySummary extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
+    authorId: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;

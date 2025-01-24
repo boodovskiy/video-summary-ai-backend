@@ -26,16 +26,16 @@ export default (config, { strapi }: { strapi: Core.Strapi }) => {
         await next();
         
         // Update the user credits
-        // try {
-        //     await strapi.documents('plugin:users-permissions.user').update({
-        //         documentId: user.documentId,
-        //         data: {
-        //             credits: availableCredits - 1,
-        //         },
-        //     });
-        // } catch (error) {
-        //     ctx.badRequest("Error Updating User Credits");
-        // }
+        try {
+            await strapi.documents('plugin::users-permissions.user').update({
+                documentId: user.documentId,
+                data: {
+                    credits: availableCredits - 1,
+                },
+            });
+        } catch (error) {
+            ctx.badRequest("Error Updating User Credits");
+        }
 
         console.log("############ Inside middleware end #############");
     }
