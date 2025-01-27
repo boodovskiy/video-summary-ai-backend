@@ -7,7 +7,27 @@ export default {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/* { strapi }: { strapi: Core.Strapi } */) {},
+  register(/* { strapi }: { strapi: Core.Strapi } */) {
+    const userRoutes = strapi.plugins["users-permissions"].routes["content-api"].routes;
+
+    const isUserOwnerMiddleware = "global::user-find-many";
+
+    const findUser = userRoutes.findIndex(
+      (route) => route.handler === "user.find" && route.method === "GET"
+    );
+
+    function initializeRoute(routes, index){
+      routes[index].config.middlewares = routes[index].config.middlewares || [];
+      routes[index].config.policies = routes[index].config.policies || [];
+    }
+
+    if (findUser){
+      initializeRoute(userRoutes, findUser);
+      userRoutes[findUser].config.middlewares.push(isUserOwnerMiddleware);
+    }
+
+    console.log(userRoutes[findUser]);
+  },
 
   /**
    * An asynchronous bootstrap function that runs before
