@@ -25,8 +25,6 @@ export default {
       initializeRoute(userRoutes, findUser);
       userRoutes[findUser].config.middlewares.push(isUserOwnerMiddleware);
     }
-
-    console.log(userRoutes[findUser]);
   },
 
   /**
