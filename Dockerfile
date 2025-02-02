@@ -24,6 +24,9 @@ RUN apt-get update -qq && \
 COPY package-lock.json package.json ./
 RUN npm ci
 
+# ✅ Install pg manually
+RUN npm install pg
+
 # Copy application code
 COPY . .
 
@@ -38,6 +41,9 @@ FROM base
 
 # Copy built application
 COPY --from=build /app /app
+
+# ✅ Ensure pg is present in the final stage
+RUN npm install pg --omit=dev
 
 # Expose port
 EXPOSE 1337
