@@ -6,7 +6,7 @@ export default ({ env }) => ({
   },
   settings: {
     cors: {
-      origin: ['http://localhost:3000', 'https://backend-wispy-fire-4184.fly.dev'], // Replace with your Next.js app's URL
+      origin: ['http://localhost:3000', 'https://backend-wispy-fire-4184.fly.dev', 'https://video-summary-ai-nine.vercel.app'], // Replace with your Next.js app's URL
       credentials: true,
     },
   },
