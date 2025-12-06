@@ -10,10 +10,15 @@
     "start": "strapi start",
     "strapi": "strapi"
   },
+  "overrides": {
+    "koa": ">=2.16.2",
+    "glob": ">=10.5.0",
+    "jws": ">=3.2.3"
+  },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.5.0",
-    "@strapi/plugin-users-permissions": "5.5.0",
-    "@strapi/strapi": "^5.24.2",
+    "@strapi/plugin-cloud": "^5.31.3",
+    "@strapi/plugin-users-permissions": "^5.31.3",
+    "@strapi/strapi": "^5.31.3",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
