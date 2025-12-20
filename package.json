@@ -44,5 +44,8 @@
   },
   "strapi": {
     "uuid": "1f6108e5-faf4-4530-8ff4-0e2419141ae0"
+  },
+  "optionalDependencies": {
+    "@esbuild/win32-x64": "^0.27.2"
   }
 }
