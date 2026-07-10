@@ -49,7 +49,7 @@ On success, the backend fetches the transcript, generates a structured title and
 }
 ```
 
-Before using the endpoint, enable the `summary.generate` permission for the Authenticated role in Strapi Admin under **Settings → Users & Permissions → Roles**.
+At startup, an idempotent bootstrap grants only `summary.generate` to the Authenticated role. The route remains unavailable to public users.
 
 Expected errors include invalid video IDs (`400`), insufficient credits (`402`), missing transcripts (`422`), missing service configuration (`503`), and upstream transcript/OpenAI failures (`502`). API responses never expose provider error details or secrets.
 
