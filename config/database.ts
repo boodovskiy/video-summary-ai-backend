@@ -1,5 +1,11 @@
 import path from 'path';
 
+export function resolveSqliteFilename(filename: string) {
+  return path.isAbsolute(filename)
+    ? filename
+    : path.join(__dirname, '..', '..', filename);
+}
+
 export default ({ env }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
 
@@ -44,7 +50,7 @@ export default ({ env }) => {
     },
     sqlite: {
       connection: {
-        filename: path.join(__dirname, '..', '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        filename: resolveSqliteFilename(env('DATABASE_FILENAME', '.tmp/data.db')),
       },
       useNullAsDefault: true,
     },
