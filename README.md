@@ -1,61 +1,74 @@
-# 🚀 Getting started with Strapi
+# Video Summary AI backend
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+Strapi 5 backend for authentication, user credits, summary storage, and AI-powered YouTube transcript summarization.
 
-### `develop`
+## Requirements
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
+- Node.js 20–22 (the production image uses Node.js 22)
+- PostgreSQL in production or SQLite for local development
+- An OpenAI API key
+- A compatible transcript provider
 
+Copy `.env.example` to `.env` and set the Strapi secrets plus:
+
+```env
+OPENAI_API_KEY=
+OPENAI_MODEL=gpt-5.4-mini
+OPENAI_TIMEOUT_MS=45000
+TRANSCRIPT_API_URL=https://example.com/yt-transcript
+TRANSCRIPT_TIMEOUT_MS=15000
+TRANSCRIPT_MAX_CHARS=160000
 ```
+
+`TRANSCRIPT_API_URL` is a base URL. The requested YouTube video ID is appended as the final path segment.
+
+## Summary generation API
+
+`POST /api/summaries/generate` requires a Users & Permissions JWT.
+
+```http
+Authorization: Bearer <jwt>
+Content-Type: application/json
+
+{
+  "videoId": "dQw4w9WgXcQ"
+}
+```
+
+On success, the backend fetches the transcript, generates a structured title and Markdown summary, publishes the summary document, and decrements one user credit atomically.
+
+```json
+{
+  "data": {
+    "documentId": "...",
+    "videoId": "dQw4w9WgXcQ",
+    "title": "...",
+    "summary": "..."
+  },
+  "error": null
+}
+```
+
+Before using the endpoint, enable the `summary.generate` permission for the Authenticated role in Strapi Admin under **Settings → Users & Permissions → Roles**.
+
+Expected errors include invalid video IDs (`400`), insufficient credits (`402`), missing transcripts (`422`), missing service configuration (`503`), and upstream transcript/OpenAI failures (`502`). API responses never expose provider error details or secrets.
+
+## Development
+
+```bash
+npm install
 npm run develop
-# or
-yarn develop
 ```
 
-### `start`
+Useful checks:
 
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
-
-```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
+```bash
+npm test
 npm run build
-# or
-yarn build
 ```
 
-## ⚙️ Deployment
+## Deployment
 
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
+The included `Dockerfile` installs from `package-lock.json`, builds the Strapi admin panel, and runs the production server on port `1337`. `fly.toml` is configured to auto-start a stopped machine when a request arrives.
 
-```
-yarn strapi deploy
-```
-
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
-
----
-
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+Set production secrets with Fly before deployment, including all Strapi secrets, database settings, `OPENAI_API_KEY`, and transcript provider settings.
