@@ -72,3 +72,6 @@ npm run build
 The included `Dockerfile` installs from `package-lock.json`, builds the Strapi admin panel, and runs the production server on port `1337`. `fly.toml` is configured to auto-start a stopped machine when a request arrives.
 
 Set production secrets with Fly before deployment, including all Strapi secrets, database settings, `OPENAI_API_KEY`, and transcript provider settings.
+
+See [the production migration plan](docs/production-migration-plan.md) for the
+PostgreSQL migration, secret checklist, validation steps, and rollback plan.
